@@ -6,7 +6,7 @@
  *   4. otherwise the sender, except shopping-list entries, which belong to the whole family
  * Items are never silently given to the household owner.
  */
-import type { ItemType, Member, ResolvedItem } from "@ghar/shared";
+import type { ItemType, Member, ResolvedItem } from "@homegenie/shared";
 
 const FIRST_PERSON = /^(me|myself|i|mujhe|mujhko|main|mera|meri|apne aap|self)$/;
 const EVERYONE = /^(everyone|everybody|all|sab|sabko|sab log|family|ghar|anyone|someone|somebody|koi bhi|koi|kisi|kisi ko)$/;

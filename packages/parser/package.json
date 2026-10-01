@@ -1,5 +1,5 @@
 {
-  "name": "@ghar/parser",
+  "name": "@homegenie/parser",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.131.0",
-    "@ghar/shared": "0.1.0",
+    "@homegenie/shared": "0.1.0",
     "luxon": "^3.5.0",
     "zod": "^3.23.0"
   }

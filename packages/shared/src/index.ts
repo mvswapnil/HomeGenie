@@ -1,5 +1,5 @@
 /**
- * Shared domain types for Ghar (working name).
+ * Shared domain types for HomeGenie.
  * These mirror supabase/migrations/0001_init.sql. Keep them in sync.
  */
 import { z } from "zod";

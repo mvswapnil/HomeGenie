@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { Member } from "@ghar/shared";
+import type { Member } from "@homegenie/shared";
 import { decide, findDuplicateBill, parseMessage, resolveAssignee, isChatter, parseAmount } from "../src/index.js";
 import type { Extraction, Extractor } from "../src/index.js";
 

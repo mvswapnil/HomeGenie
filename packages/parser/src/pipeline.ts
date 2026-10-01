@@ -4,7 +4,7 @@
  * The extractor proposes; code resolves dates and people and decides what gets written.
  */
 import { DateTime } from "luxon";
-import { HOUSEHOLD_TZ_DEFAULT, type Item, type Member, type ParseDecision, type ResolvedItem } from "@ghar/shared";
+import { HOUSEHOLD_TZ_DEFAULT, type Item, type Member, type ParseDecision, type ResolvedItem } from "@homegenie/shared";
 import { isChatter } from "./chatter.js";
 import type { Extraction, Extractor } from "./extractors/types.js";
 import { resolveDue } from "./resolve/dates.js";

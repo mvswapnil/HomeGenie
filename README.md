@@ -1,4 +1,4 @@
-# Ghar (working name)
+# HomeGenie
 
 A family household organizer for India. Family members post bills, voice notes, photos and to-dos into a shared family chat inside the app; the app turns each post into an organized, assigned item.
 

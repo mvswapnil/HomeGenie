@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ItemType } from "@ghar/shared";
+import { ItemType } from "@homegenie/shared";
 
 /**
  * What an extractor returns. The extractor only quotes and classifies; it never computes dates,

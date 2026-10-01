@@ -1,5 +1,5 @@
 {
-  "name": "ghar",
+  "name": "homegenie",
   "private": true,
   "description": "Family household organizer: family chat in, organized items out",
   "workspaces": [
@@ -9,7 +9,7 @@
     "build": "tsc -b packages/shared packages/parser",
     "typecheck": "tsc -b packages/shared packages/parser --noEmit false",
     "test": "vitest run",
-    "eval": "npm run eval -w @ghar/parser --"
+    "eval": "npm run eval -w @homegenie/parser --"
   },
   "devDependencies": {
     "typescript": "^5.6.0",

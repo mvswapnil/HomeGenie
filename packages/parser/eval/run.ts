@@ -11,7 +11,7 @@ import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { DateTime } from "luxon";
-import type { Member, ResolvedItem } from "@ghar/shared";
+import type { Member, ResolvedItem } from "@homegenie/shared";
 import { AnthropicExtractor, HeuristicExtractor, parseMessage, withFallback, type Extractor } from "../src/index.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));

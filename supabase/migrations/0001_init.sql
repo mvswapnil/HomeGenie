@@ -1,4 +1,4 @@
--- Ghar: initial schema.
+-- HomeGenie: initial schema.
 -- Mirrors packages/shared/src/index.ts. Written for Supabase (Postgres 15+, auth.users).
 -- Every table carries household_id, and row-level security limits each user to their own household.
 
