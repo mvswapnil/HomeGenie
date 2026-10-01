@@ -30,8 +30,25 @@ const INPUT_SCHEMA = {
         required: ["type", "title", "assignee_hint", "due_text", "amount", "list_name", "biller", "confidence"],
       },
     },
+    updates: {
+      type: "array",
+      description: "Changes to open items listed in the context, by ref. Empty if none.",
+      items: {
+        type: "object",
+        properties: {
+          ref: { type: "string" },
+          op: { type: "string", enum: ["update", "complete", "cancel", "claim", "confirm"] },
+          title: { type: ["string", "null"] },
+          amount: { type: ["number", "null"] },
+          due_text: { type: ["string", "null"] },
+          assignee_hint: { type: ["string", "null"] },
+          confidence: { type: "number", minimum: 0, maximum: 1 },
+        },
+        required: ["ref", "op", "confidence"],
+      },
+    },
   },
-  required: ["actionable", "items"],
+  required: ["actionable", "items", "updates"],
 } as const;
 
 export interface AnthropicExtractorOptions {

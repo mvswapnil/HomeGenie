@@ -102,7 +102,7 @@ export interface ResolvedItem {
   title: string;
   assignedTo: string | null;
   /** How assignment was decided, for debugging and the eval scorecard. */
-  assignedBy: "mention" | "alias" | "first_person" | "default_sender" | "none";
+  assignedBy: "mention" | "alias" | "first_person" | "default_sender" | "learned" | "none";
   dueAt: string | null;
   /** True when the date was guessed from vague text ("next week", "after Diwali"). */
   dueIsGuess: boolean;
@@ -111,4 +111,27 @@ export interface ResolvedItem {
   listName: string | null;
   biller: string | null;
   confidence: number;
+}
+
+/** A change to an existing item, resolved from a message ("actually ₹4,500", "paid", "I'll do it"). */
+export interface ResolvedUpdate {
+  itemId: string;
+  op: "update" | "complete" | "cancel" | "claim" | "confirm";
+  changes: {
+    title?: string;
+    amount?: number;
+    dueAt?: string;
+    assignedTo?: string | null;
+  };
+  confidence: number;
+}
+
+/** Stored on chat_message.parse_result; the app draws the cards under a message from it. */
+export interface MessageParseResult {
+  itemIds: string[];
+  suggestionId: string | null;
+  updatedItemIds: string[];
+  /** Bills this message repeated: "Already added by Mom". */
+  duplicates: Array<{ itemId: string; addedBy: string }>;
+  reason?: string;
 }

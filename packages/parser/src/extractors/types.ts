@@ -23,12 +23,65 @@ export const ExtractedItem = z.object({
 });
 export type ExtractedItem = z.infer<typeof ExtractedItem>;
 
+/**
+ * A change to an item the family already has. `ref` must be one of the open-item refs given in the
+ * context ("i3"); code maps refs to ids and drops anything that doesn't match.
+ */
+export const ExtractedUpdate = z.object({
+  ref: z.string(),
+  /** update: change fields · complete: done/paid/bought · cancel: no longer needed · claim: sender takes it on
+   *  · confirm: "yes, add it" to a suggested card */
+  op: z.enum(["update", "complete", "cancel", "claim", "confirm"]),
+  title: z.string().nullable().default(null),
+  amount: z.number().nullable().default(null),
+  due_text: z.string().nullable().default(null),
+  assignee_hint: z.string().nullable().default(null),
+  confidence: z.number().min(0).max(1),
+});
+export type ExtractedUpdate = z.infer<typeof ExtractedUpdate>;
+
 export const Extraction = z.object({
   /** False for chatter, questions and replies that ask nothing of anyone. */
   actionable: z.boolean(),
   items: z.array(ExtractedItem),
+  /** Changes to existing items. Older extractor outputs without this field still parse. */
+  updates: z.array(ExtractedUpdate).default([]),
 });
 export type Extraction = z.infer<typeof Extraction>;
+/** What an extractor may return: `updates` is optional and defaults to []. */
+export type ExtractionInput = z.input<typeof Extraction>;
+
+/** A recent chat message, shown to the extractor so follow-ups ("actually ₹4,500") make sense. */
+export interface ContextMessage {
+  senderName: string;
+  text: string;
+  minutesAgo: number;
+}
+
+/** An open item, shown with a short ref the extractor can point at. Ids never reach the model. */
+export interface ContextItem {
+  ref: string;
+  type: string;
+  title: string;
+  assigneeName: string | null;
+  createdByName: string;
+  /** Household-local, human readable: "Thu 1 Oct, 09:00". */
+  due: string | null;
+  amount: number | null;
+  minutesAgo: number;
+}
+
+/** What the household already knows, so each message isn't read in a vacuum. */
+export interface ParseContext {
+  recentMessages: ContextMessage[];
+  openItems: ContextItem[];
+  /** Household memory, one plain sentence each: "Electricity bill: usually about ₹4,200, due around the 1st, paid by Mom." */
+  facts: string[];
+  /** Recent corrections the family made to parsed items, one sentence each. */
+  corrections: string[];
+  /** The message this one replies to, if any. */
+  replyTo?: ContextMessage;
+}
 
 export interface ExtractInput {
   /** Message text, or transcript/OCR text for voice and media. */
@@ -40,9 +93,10 @@ export interface ExtractInput {
   listNames: string[];
   /** Household-local time, ISO, so the model knows what "kal" means (it still only quotes). */
   nowIso: string;
+  context?: ParseContext;
 }
 
 export interface Extractor {
   readonly name: string;
-  extract(input: ExtractInput): Promise<Extraction>;
+  extract(input: ExtractInput): Promise<ExtractionInput>;
 }
