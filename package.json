@@ -6,8 +6,8 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "tsc -b packages/shared packages/parser",
-    "typecheck": "tsc -b packages/shared packages/parser --noEmit false",
+    "build": "tsc -b packages/shared packages/parser packages/server",
+    "typecheck": "tsc -b packages/shared packages/parser packages/server",
     "test": "vitest run",
     "eval": "npm run eval -w @homegenie/parser --"
   },

@@ -4,7 +4,7 @@
  *   2. a fallback when the model API is down, so captures degrade instead of failing.
  * It is not expected to reach the 85% bar on its own.
  */
-import type { ExtractedItem, Extraction, ExtractInput, Extractor } from "./types.js";
+import type { ExtractedItem, ExtractionInput as Extraction, ExtractInput, Extractor } from "./types.js";
 
 const DONE = /\b(paid|pay kar diya|pay ho gaya|bhar diya|bhar di|jama kar diya|le aaya|le aayi|le aaye|bought|got it|kar diya|kar di|ho gaya|ho gayi|already)\b/;
 const REMIND = /\b(remind|reminder|yaad dila|yaad dilana|yaad rakhna|yaad karana)\w*/;

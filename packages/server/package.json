@@ -1,0 +1,22 @@
+{
+  "name": "@homegenie/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@homegenie/parser": "0.1.0",
+    "@homegenie/shared": "0.1.0",
+    "@hono/node-server": "^1.13.0",
+    "hono": "^4.6.0",
+    "jose": "^5.9.0",
+    "luxon": "^3.5.0",
+    "pg": "^8.13.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": { "@types/pg": "^8.11.0" }
+}

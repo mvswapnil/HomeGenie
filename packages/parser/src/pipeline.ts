@@ -4,9 +4,9 @@
  * The extractor proposes; code resolves dates and people and decides what gets written.
  */
 import { DateTime } from "luxon";
-import { HOUSEHOLD_TZ_DEFAULT, type Item, type Member, type ParseDecision, type ResolvedItem } from "@homegenie/shared";
+import { HOUSEHOLD_TZ_DEFAULT, type Item, type Member, type ParseDecision, type ResolvedItem, type ResolvedUpdate } from "@homegenie/shared";
 import { isChatter } from "./chatter.js";
-import type { Extraction, Extractor } from "./extractors/types.js";
+import { Extraction, type Extractor, type ParseContext } from "./extractors/types.js";
 import { resolveDue } from "./resolve/dates.js";
 import { namesOf, resolveAssignee } from "./resolve/members.js";
 
@@ -23,6 +23,10 @@ export interface ParseInput {
   tz?: string;
   /** Injected for tests and evals; defaults to the real clock. */
   now?: Date;
+  /** Recent messages, open items, household memory. Built by the server; optional for evals. */
+  context?: ParseContext;
+  /** Maps the refs shown in context.openItems ("i3") back to item ids. Only these can be updated. */
+  itemRefs?: Record<string, string>;
 }
 
 export interface ParseResult {
@@ -32,6 +36,34 @@ export interface ParseResult {
   extractor: string;
   /** True when the chatter screen answered and no model was called. */
   screened: boolean;
+  /** Changes to existing items, already checked against the refs we offered. */
+  updates: ResolvedUpdate[];
+}
+
+/** Map extractor updates onto real items. Unknown refs and low-confidence updates are dropped. */
+export function resolveUpdates(extraction: Extraction, input: ParseInput, now: DateTime): ResolvedUpdate[] {
+  const out: ResolvedUpdate[] = [];
+  for (const u of extraction.updates) {
+    const itemId = input.itemRefs?.[u.ref];
+    if (!itemId || u.confidence < CONFIDENCE_THRESHOLD) continue;
+    const changes: ResolvedUpdate["changes"] = {};
+    if (u.op === "claim") changes.assignedTo = input.senderId;
+    if (u.op === "update") {
+      if (u.title) changes.title = u.title.trim();
+      if (u.amount !== null && u.amount > 0) changes.amount = u.amount;
+      if (u.due_text) {
+        const due = resolveDue(u.due_text, now);
+        if (due.dueAt && !due.isGuess) changes.dueAt = due.dueAt; // a vague new date isn't worth overwriting a real one
+      }
+      if (u.assignee_hint) {
+        const who = resolveAssignee({ hint: u.assignee_hint, mentions: input.mentions ?? [], members: input.members, senderId: input.senderId, type: "task" });
+        if (who.assignedBy !== "default_sender") changes.assignedTo = who.assignedTo;
+      }
+      if (Object.keys(changes).length === 0) continue;
+    }
+    out.push({ itemId, op: u.op, changes, confidence: u.confidence });
+  }
+  return out;
 }
 
 export function resolveItems(extraction: Extraction, input: ParseInput, now: DateTime): ResolvedItem[] {
@@ -74,20 +106,27 @@ export async function parseMessage(input: ParseInput, extractor: Extractor): Pro
   const tz = input.tz ?? HOUSEHOLD_TZ_DEFAULT;
   const now = DateTime.fromJSDate(input.now ?? new Date(), { zone: tz });
 
-  if (isChatter(input.text) && !(input.mentions?.length)) {
-    return { decision: { kind: "none", reason: "chatter" }, extraction: null, extractor: "chatter-screen", screened: true };
+  // A short reply to a message ("haan main kar dunga", "done") can settle an item, so replies skip the screen.
+  if (isChatter(input.text) && !(input.mentions?.length) && !input.context?.replyTo) {
+    return { decision: { kind: "none", reason: "chatter" }, extraction: null, extractor: "chatter-screen", screened: true, updates: [] };
   }
 
   const sender = input.members.find((m) => m.id === input.senderId);
-  const extraction = await extractor.extract({
-    text: input.text,
-    senderName: sender?.displayName ?? "Unknown",
-    memberNames: [...new Set(input.members.flatMap(namesOf))],
-    listNames: input.listNames ?? ["Shopping"],
-    nowIso: now.toISO() ?? "",
-  });
+  const extraction = Extraction.parse(
+    await extractor.extract({
+      text: input.text,
+      senderName: sender?.displayName ?? "Unknown",
+      memberNames: [...new Set(input.members.flatMap(namesOf))],
+      listNames: input.listNames ?? ["Shopping"],
+      nowIso: now.toISO() ?? "",
+      context: input.context,
+    }),
+  );
   const items = resolveItems(extraction, input, now);
-  return { decision: decide(extraction, items), extraction, extractor: extractor.name, screened: false };
+  const updates = resolveUpdates(extraction, input, now);
+  // An update-only message ("paid") is actionable even with no new items.
+  const decision = items.length === 0 && updates.length > 0 ? ({ kind: "none", reason: "updates only" } as const) : decide(extraction, items);
+  return { decision, extraction, extractor: extractor.name, screened: false, updates };
 }
 
 /** Wraps a primary extractor with a fallback, so a model outage degrades to rules instead of failing. */

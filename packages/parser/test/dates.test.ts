@@ -115,3 +115,15 @@ describe("bare hours", () => {
   it("'4 baje' with no day part is 4 pm", () => expect(parseTime("4 baje")).toEqual({ hour: 16, minute: 0 }));
   it("'subah 6 baje' stays 6 am", () => expect(parseTime("subah 6 baje")).toEqual({ hour: 6, minute: 0 }));
 });
+
+describe("next month", () => {
+  it.each([
+    ["1st of next month", "2026-10-01 09:00", false],
+    ["next month 5th", "2026-10-05 09:00", false],
+    ["agle mahine ki 10 tareekh", "2026-10-10 09:00", false],
+    ["end of next month", "2026-10-31 09:00", false],
+    ["next month", "2026-10-01 09:00", true],
+  ])("%s → %s", (text, expected, guess) => {
+    expect(at(text)).toMatchObject({ local: expected, isGuess: guess });
+  });
+});

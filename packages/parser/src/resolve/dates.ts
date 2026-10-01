@@ -211,7 +211,17 @@ export function resolveDue(dueText: string | null | undefined, now: DateTime): D
   if (/\b(this week|is hafte|iss hafte)\b/.test(t)) return done(atTime(nextWeekday(now, 5, false), t), true);
   if (/\b(weekend|this weekend)\b/.test(t)) return done(atTime(nextWeekday(now, 6, false), t), true);
   if (/\b(month end|end of (?:the )?month|mahine ke end|mahine ke aakhir)\b/.test(t)) return done(atTime(today.endOf("month").startOf("day"), t));
-  if (/\b(next month|agle mahine)\b/.test(t)) return done(atTime(today.plus({ months: 1 }).startOf("month"), t), true);
+  // "1st of next month", "next month 5th", "agle mahine ki 10 tareekh", "end of next month"
+  if (/\b(next month|agle mahine|agle month)\b/.test(t)) {
+    const nm = today.plus({ months: 1 }).startOf("month");
+    if (/\b(end|aakhir|last day)\b/.test(t)) return done(atTime(nm.endOf("month").startOf("day"), t));
+    const dm = t.match(/\b(\d{1,2})(?:st|nd|rd|th)?\b(?!\s*(?:am|pm|baje|:))/);
+    if (dm) {
+      const dom = Number(dm[1]);
+      if (dom >= 1 && dom <= 31) return done(atTime(nm.set({ day: Math.min(dom, nm.daysInMonth ?? 28) }), t));
+    }
+    return done(atTime(nm, t), true);
+  }
   if (/\b(soon|jaldi|sometime|kabhi|whenever|later|baad me|baad mein|free time)\b/.test(t)) return { dueAt: null, isGuess: true, rrule: null };
 
   // Weekdays: "Monday", "next Friday", "somvar ko", "this sat"

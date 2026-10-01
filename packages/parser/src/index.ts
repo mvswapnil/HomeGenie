@@ -1,4 +1,4 @@
-export { parseMessage, resolveItems, decide, withFallback, findDuplicateBill, CONFIDENCE_THRESHOLD } from "./pipeline.js";
+export { parseMessage, resolveItems, resolveUpdates, decide, withFallback, findDuplicateBill, CONFIDENCE_THRESHOLD } from "./pipeline.js";
 export type { ParseInput, ParseResult } from "./pipeline.js";
 export { isChatter } from "./chatter.js";
 export { resolveDue, parseTime, DEFAULT_HOUR } from "./resolve/dates.js";
@@ -7,4 +7,6 @@ export { resolveAssignee, matchMember, namesOf } from "./resolve/members.js";
 export { AnthropicExtractor } from "./extractors/anthropic.js";
 export { HeuristicExtractor, parseAmount } from "./extractors/heuristic.js";
 export { Extraction, ExtractedItem } from "./extractors/types.js";
-export type { Extractor, ExtractInput } from "./extractors/types.js";
+export { ExtractedUpdate } from "./extractors/types.js";
+export type { Extractor, ExtractInput, ExtractionInput, ParseContext, ContextItem, ContextMessage } from "./extractors/types.js";
+export { SYSTEM_PROMPT, userPrompt } from "./extractors/prompt.js";
