@@ -12,7 +12,7 @@
     }
   },
   "scripts": {
-    "eval": "tsx eval/run.ts"
+    "eval": "tsc -b ../shared && tsx eval/run.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.131.0",
