@@ -1,0 +1,25 @@
+{
+  "name": "ghar",
+  "private": true,
+  "description": "Family household organizer: family chat in, organized items out",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "tsc -b packages/shared packages/parser",
+    "typecheck": "tsc -b packages/shared packages/parser --noEmit false",
+    "test": "vitest run",
+    "eval": "npm run eval -w @ghar/parser --"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0",
+    "tsx": "^4.19.0",
+    "@types/node": "^22.0.0",
+    "@types/luxon": "^3.4.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "type": "module"
+}

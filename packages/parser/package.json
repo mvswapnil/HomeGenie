@@ -1,0 +1,23 @@
+{
+  "name": "@ghar/parser",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "eval": "tsx eval/run.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.131.0",
+    "@ghar/shared": "0.1.0",
+    "luxon": "^3.5.0",
+    "zod": "^3.23.0"
+  }
+}

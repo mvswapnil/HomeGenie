@@ -1,0 +1,40 @@
+{"id":"bill-01","sender":"mom","text":"Electricity bill ₹4,237 pay by 1 Oct","expect":{"decision":"items","items":[{"type":"bill","assignee":"mom","due":"2026-10-01","amount":4237}]}}
+{"id":"bill-02","sender":"papa","text":"Riya ki school fees 18500, due 5th","expect":{"decision":"items","items":[{"type":"bill","assignee":"papa","due":"2026-10-05","amount":18500}]}}
+{"id":"bill-03","sender":"mom","text":"Maintenance 3000 due 10 Oct, papa please pay kar dena","expect":{"decision":"items","items":[{"type":"bill","assignee":"papa","due":"2026-10-10","amount":3000}]}}
+{"id":"bill-04","sender":"dadi","text":"bijli ka bill aaya hai 2,180 rupaye, 8 tareekh tak bharna hai","expect":{"decision":"items","items":[{"type":"bill","assignee":"dadi","due":"2026-10-08","amount":2180}]}}
+{"id":"bill-05","sender":"papa","text":"Airtel broadband 1499 auto-debit on 12th","expect":{"decision":"items","items":[{"type":"bill","assignee":"papa","due":"2026-10-12","amount":1499}]}}
+{"id":"bill-06","sender":"arjun","text":"credit card bill 23,450 kal last date hai","expect":{"decision":"items","items":[{"type":"bill","assignee":"arjun","due":"2026-10-01","amount":23450}]}}
+{"id":"bill-07","sender":"mom","text":"Paid the water bill ₹640","expect":{"decision":"none"}}
+{"id":"bill-08","sender":"mom","text":"Rent 25000 har mahine 5 tareekh","expect":{"decision":"items","items":[{"type":"bill","assignee":"mom","due":"2026-10-05","amount":25000,"recurrence":"FREQ=MONTHLY;BYMONTHDAY=5"}]}}
+{"id":"bill-09","sender":"mom","kind":"image","text":"BESCOM\nConsumer No 1021221178\nBill Amount Rs 4237.00\nDue Date 01-10-2026","expect":{"decision":"items","items":[{"type":"bill","assignee":"mom","due":"2026-10-01","amount":4237}]}}
+{"id":"shop-01","sender":"mom","text":"doodh aur bread le aana","expect":{"decision":"items","items":[{"type":"list_entry","assignee":null,"list":"Shopping"},{"type":"list_entry","assignee":null,"list":"Shopping"}]}}
+{"id":"shop-02","sender":"papa","kind":"voice","text":"Add atta 5 kg, dal 1 kg and haldi to the list","expect":{"decision":"items","items":[{"type":"list_entry","list":"Shopping"},{"type":"list_entry","list":"Shopping"},{"type":"list_entry","list":"Shopping"}]}}
+{"id":"shop-03","sender":"riya","text":"school socks chahiye","expect":{"decision":"items","items":[{"type":"list_entry","assignee":null,"list":"Shopping"}]}}
+{"id":"shop-04","sender":"dadi","text":"chai patti khatam ho gayi","expect":{"decision":"items","items":[{"type":"list_entry","assignee":null,"list":"Shopping"}]}}
+{"id":"shop-05","sender":"arjun","text":"get eggs and onions on the way back","expect":{"decision":"items","items":[{"type":"list_entry","list":"Shopping"},{"type":"list_entry","list":"Shopping"}]}}
+{"id":"shop-06","sender":"mom","text":"Riya ke liye packing list mein toothbrush aur charger daal do","expect":{"decision":"items","items":[{"type":"list_entry","list":"Packing"},{"type":"list_entry","list":"Packing"}]}}
+{"id":"shop-07","sender":"mom","text":"add tomatoes, pyaaz 2 kg and coriander to shopping","expect":{"decision":"items","items":[{"type":"list_entry","list":"Shopping"},{"type":"list_entry","list":"Shopping"},{"type":"list_entry","list":"Shopping"}]}}
+{"id":"rem-01","sender":"mom","text":"remind me to call the plumber tomorrow at 11am","expect":{"decision":"items","items":[{"type":"reminder","assignee":"mom","due":"2026-10-01","time":"11:00"}]}}
+{"id":"rem-02","sender":"papa","kind":"voice","text":"Mujhe kal subah 7 baje yaad dilana ki car service hai","expect":{"decision":"items","items":[{"type":"reminder","assignee":"papa","due":"2026-10-01","time":"07:00"}]}}
+{"id":"rem-03","sender":"dadi","text":"roz raat 9 baje dawai ki yaad dila dena","expect":{"decision":"items","items":[{"type":"reminder","assignee":"dadi","due":"2026-09-30","time":"21:00","recurrence":"FREQ=DAILY"}]}}
+{"id":"rem-04","sender":"riya","text":"remind papa about PTM on Saturday","expect":{"decision":"items","items":[{"type":"reminder","assignee":"papa","due":"2026-10-03"}]}}
+{"id":"task-01","sender":"mom","text":"@Papa AC service book karo is weekend","mentions":["papa"],"expect":{"decision":"suggestion","items":[{"type":"task","assignee":"papa","due":"2026-10-03"}]}}
+{"id":"task-02","sender":"papa","text":"Riya ko kal 4 baje tuition se pick karna hai","expect":{"decision":"items","items":[{"type":"task","assignee":"papa","due":"2026-10-01","time":"16:00"}]}}
+{"id":"task-03","sender":"dadi","text":"Arjun, gas cylinder book kar dena","expect":{"decision":"items","items":[{"type":"task","assignee":"arjun","due":null}]}}
+{"id":"task-04","sender":"mom","text":"Car insurance renew karna hai Monday tak","expect":{"decision":"items","items":[{"type":"task","assignee":"mom","due":"2026-10-05"}]}}
+{"id":"task-05","sender":"arjun","text":"I'll call the electrician on Friday","expect":{"decision":"items","items":[{"type":"task","assignee":"arjun","due":"2026-10-02"}]}}
+{"id":"task-06","sender":"papa","text":"washing machine kharab lag rahi hai","expect":{"decision":"suggestion","items":[{"type":"task","assignee":"papa","due":null}]}}
+{"id":"task-07","sender":"mom","text":"Riya, apna project submit karna 15/10 tak","expect":{"decision":"items","items":[{"type":"task","assignee":"riya","due":"2026-10-15"}]}}
+{"id":"task-08","sender":"riya","text":"Can someone drop me to the station at 6:30 pm tomorrow?","expect":{"decision":"items","items":[{"type":"task","assignee":null,"due":"2026-10-01","time":"18:30"}]}}
+{"id":"task-09","sender":"papa","text":"Plumber ko bulana hai bathroom leak ke liye","expect":{"decision":"items","items":[{"type":"task","assignee":"papa","due":null}]}}
+{"id":"task-10","sender":"mom","text":"Dadi ki doctor appointment book karni hai next week","expect":{"decision":"suggestion","items":[{"type":"task","assignee":"mom","due":"2026-10-05"}]}}
+{"id":"task-11","sender":"papa","text":"Arjun bhaiya ko bolo laptop repair karwa le, parso tak","expect":{"decision":"items","items":[{"type":"task","assignee":"arjun","due":"2026-10-02"}]}}
+{"id":"multi-01","sender":"papa","kind":"voice","text":"milk 2 litre le aana aur maid ko 6000 salary dena hai","expect":{"decision":"items","items":[{"type":"list_entry","list":"Shopping"},{"type":"task","assignee":"papa","amount":6000}]}}
+{"id":"none-01","sender":"riya","text":"ok","expect":{"decision":"none"}}
+{"id":"none-02","sender":"papa","text":"on my way, 10 min","expect":{"decision":"none"}}
+{"id":"none-03","sender":"mom","text":"Did anyone pay the electricity bill?","expect":{"decision":"none"}}
+{"id":"none-04","sender":"dadi","text":"Haan beta thik hai 🙏","expect":{"decision":"none"}}
+{"id":"none-05","sender":"arjun","text":"lol 😂","expect":{"decision":"none"}}
+{"id":"none-06","sender":"papa","text":"Bread le aaya","expect":{"decision":"none"}}
+{"id":"none-07","sender":"mom","text":"Kitna hua total bill?","expect":{"decision":"none"}}
+{"id":"none-08","sender":"arjun","text":"reached office","expect":{"decision":"none"}}
