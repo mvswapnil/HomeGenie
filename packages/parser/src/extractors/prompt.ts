@@ -16,6 +16,7 @@ Rules:
 - Split a message that asks for several things into several items ("doodh aur bread le aana" → two list entries).
 - amount: rupees as a plain number (₹4,237 → 4237; "6k" → 6000). Null if none.
 - Titles: short, natural, no dates or names in them ("Pay electricity bill", "Book AC service", "Milk 2 L").
+- Someone saying they will do something is a task for them: "I'll call the electrician Friday" → task, assignee_hint "me". "main kal bill bhar dunga" → bill, assignee_hint "me".
 - Chatter, greetings, acknowledgements ("ok", "on my way", "haan thik hai"), questions with no ask, and reports of things already done → actionable false, items [].
 - confidence: 0.9+ when the ask is explicit; 0.5–0.8 when it's a vague mention that might be a task ("AC kharab lag raha hai"); below 0.5 when unsure it's an item at all.`;
 

@@ -29,7 +29,7 @@
 {"id":"task-09","sender":"papa","text":"Plumber ko bulana hai bathroom leak ke liye","expect":{"decision":"items","items":[{"type":"task","assignee":"papa","due":null}]}}
 {"id":"task-10","sender":"mom","text":"Dadi ki doctor appointment book karni hai next week","expect":{"decision":"suggestion","items":[{"type":"task","assignee":"mom","due":"2026-10-05"}]}}
 {"id":"task-11","sender":"papa","text":"Arjun bhaiya ko bolo laptop repair karwa le, parso tak","expect":{"decision":"items","items":[{"type":"task","assignee":"arjun","due":"2026-10-02"}]}}
-{"id":"multi-01","sender":"papa","kind":"voice","text":"milk 2 litre le aana aur maid ko 6000 salary dena hai","expect":{"decision":"items","items":[{"type":"list_entry","list":"Shopping"},{"type":"task","assignee":"papa","amount":6000}]}}
+{"id":"multi-01","sender":"papa","kind":"voice","text":"milk 2 litre le aana aur maid ko 6000 salary dena hai","expect":{"decision":"items","items":[{"type":"list_entry","list":"Shopping"},{"type":["task","bill"],"assignee":"papa","amount":6000}]}}
 {"id":"none-01","sender":"riya","text":"ok","expect":{"decision":"none"}}
 {"id":"none-02","sender":"papa","text":"on my way, 10 min","expect":{"decision":"none"}}
 {"id":"none-03","sender":"mom","text":"Did anyone pay the electricity bill?","expect":{"decision":"none"}}

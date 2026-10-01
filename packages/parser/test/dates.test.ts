@@ -88,8 +88,11 @@ describe("resolveDue: vague text is a flagged guess", () => {
   it("after Diwali → no date, guess", () => {
     expect(at("after Diwali")).toMatchObject({ local: null, isGuess: true });
   });
-  it("unknown words → no date, guess", () => {
+  it("'whenever' → no date, guess", () => {
     expect(at("whenever")).toMatchObject({ local: null, isGuess: true });
+  });
+  it("words that aren't a date → no date, not a guess", () => {
+    expect(at("on the way back")).toMatchObject({ local: null, isGuess: false });
   });
   it("no text → no date, not a guess", () => {
     expect(resolveDue(null, NOW)).toEqual({ dueAt: null, isGuess: false, rrule: null });

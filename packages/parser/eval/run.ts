@@ -30,7 +30,8 @@ export const MEMBERS: Member[] = [
 const NOW = DateTime.fromISO("2026-09-30T10:00:00", { zone: TZ }).toJSDate();
 
 interface ExpectedItem {
-  type?: ResolvedItem["type"];
+  /** One type, or several when the message is genuinely ambiguous (maid salary: task or bill). */
+  type?: ResolvedItem["type"] | ResolvedItem["type"][];
   assignee?: string | null;
   due?: string | null; // yyyy-MM-dd
   time?: string; // HH:mm
@@ -76,7 +77,7 @@ const local = (iso: string | null) => (iso ? DateTime.fromISO(iso).setZone(TZ) :
 function pair(expected: ExpectedItem[], actual: ResolvedItem[]): Array<[ExpectedItem, ResolvedItem | undefined]> {
   const used = new Set<number>();
   return expected.map((e) => {
-    let i = actual.findIndex((a, j) => !used.has(j) && a.type === e.type);
+    let i = actual.findIndex((a, j) => !used.has(j) && e.type !== undefined && ([] as string[]).concat(e.type).includes(a.type));
     if (i < 0) i = actual.findIndex((_, j) => !used.has(j));
     if (i >= 0) used.add(i);
     return [e, i >= 0 ? actual[i] : undefined];
@@ -86,7 +87,7 @@ function pair(expected: ExpectedItem[], actual: ResolvedItem[]): Array<[Expected
 function scoreItem(e: ExpectedItem, a: ResolvedItem | undefined): Array<[Field, boolean, string]> {
   const out: Array<[Field, boolean, string]> = [];
   const d = local(a?.dueAt ?? null);
-  if (e.type !== undefined) out.push(["type", a?.type === e.type, `${a?.type}`]);
+  if (e.type !== undefined) out.push(["type", a !== undefined && ([] as string[]).concat(e.type).includes(a.type), `${a?.type}`]);
   if (e.assignee !== undefined) out.push(["assignee", (a?.assignedTo ?? null) === e.assignee, `${a?.assignedTo ?? null} (${a?.assignedBy})`]);
   if (e.due !== undefined) out.push(["due", (d?.toFormat("yyyy-MM-dd") ?? null) === e.due, `${d?.toFormat("yyyy-MM-dd") ?? null}`]);
   if (e.time !== undefined) out.push(["time", d?.toFormat("HH:mm") === e.time, `${d?.toFormat("HH:mm")}`]);
