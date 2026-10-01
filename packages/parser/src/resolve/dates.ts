@@ -212,7 +212,7 @@ export function resolveDue(dueText: string | null | undefined, now: DateTime): D
   if (/\b(weekend|this weekend)\b/.test(t)) return done(atTime(nextWeekday(now, 6, false), t), true);
   if (/\b(month end|end of (?:the )?month|mahine ke end|mahine ke aakhir)\b/.test(t)) return done(atTime(today.endOf("month").startOf("day"), t));
   if (/\b(next month|agle mahine)\b/.test(t)) return done(atTime(today.plus({ months: 1 }).startOf("month"), t), true);
-  if (/\b(soon|jaldi|sometime|kabhi)\b/.test(t)) return { dueAt: null, isGuess: true, rrule: null };
+  if (/\b(soon|jaldi|sometime|kabhi|whenever|later|baad me|baad mein|free time)\b/.test(t)) return { dueAt: null, isGuess: true, rrule: null };
 
   // Weekdays: "Monday", "next Friday", "somvar ko", "this sat"
   for (const word of t.split(" ")) {
@@ -268,6 +268,6 @@ export function resolveDue(dueText: string | null | undefined, now: DateTime): D
     return done(d);
   }
 
-  // Words we couldn't place: keep the item, ask about the date.
-  return { dueAt: null, isGuess: true, rrule: null };
+  // Words that aren't a date at all ("on the way back", "before guests come"): no date, no question.
+  return NONE;
 }

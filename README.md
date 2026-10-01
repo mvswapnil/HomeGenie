@@ -72,7 +72,9 @@ Current results on the synthetic set:
 | Extractor | Fully correct |
 | --- | --- |
 | heuristic (rules) | 34/40 = 85.0% |
-| claude | not run yet (needs API key) |
+| claude (`claude-haiku-4-5-20251001`) | 37/40 = 92.5% on first run; 40/40 on two runs after the fixes in PR #1 |
+
+The 40/40 came after fixing the exact cases Claude missed, so it overstates real-world accuracy. A full run takes about 50 seconds.
 
 Treat the synthetic score with suspicion: the same person wrote the test messages and the rules. **The real test is the concierge week.** Collect ~200 real family messages and add them to a new file in the same format:
 
@@ -91,6 +93,6 @@ Then `npm run eval -- --data path/to/real.jsonl --extractor claude`. Dates are s
 
 ## Next up
 
-1. Run the Claude extractor on the synthetic set, then on real concierge messages.
+1. Run the Claude extractor on real concierge messages (the synthetic set is now saturated).
 2. Voice: benchmark speech-to-text on real Hinglish voice notes (fills `chat_message.transcript`).
 3. Backend: Supabase project, phone OTP, a parse worker that picks up `pending` messages and writes items, suggestions and `item_event` rows.
